@@ -8,8 +8,10 @@ The roadmap is incremental. Each version adds a capability on top of a verified 
 - [x] Configure Python environment
 - [x] Create modular project structure
 - [x] Add Django foundation and homepage
-- [ ] Add dependency manifest
-- [ ] Add `.env.example`
+- [x] Add dependency manifest
+- [x] Add `.env.example`
+- [x] Add conversation persistence and audit logging
+- [x] Add safe tool registry and chat endpoint
 - [ ] Integrate an LLM provider
 - [ ] Add a terminal conversation loop
 - [ ] Add structured logging

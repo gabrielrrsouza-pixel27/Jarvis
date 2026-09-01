@@ -1,0 +1,4 @@
+Django>=6.1,<6.2
+pytest>=8.0
+pytest-django>=4.8
+python-dotenv>=1.0

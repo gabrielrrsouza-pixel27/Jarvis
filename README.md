@@ -121,6 +121,10 @@ Jarvis.0_1/
 - Portfolio-ready Python project structure
 - Extensible backend for experimentation and growth
 
+## Current Status
+
+The current release is a local, testable foundation. It includes a Django web layer, conversation persistence, a tool registry, safe starter tools, risk metadata, audit logging, and a JSON chat endpoint. Cloud LLM, voice, smart home, and deployment integrations remain tracked in the roadmap rather than being presented as completed features.
+
 ## Prerequisites
 
 - Python 3.12+
@@ -216,16 +220,15 @@ The project is documented as it evolves from the first prototype to deployment:
 
 ## Testing
 
-```bash
-# Run all tests
-pytest
+```powershell
+# Validate Django configuration
+python manage.py check
 
-# With coverage
-pytest --cov=app --cov-report=html
-
-# Specific module
-pytest tests/test_tools.py
+# Run the core application tests
+python manage.py test core
 ```
+
+The implementation history and learning notes are maintained in [CHANGELOG.md](CHANGELOG.md).
 
 ## Roadmap
 

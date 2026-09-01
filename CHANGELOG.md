@@ -12,10 +12,41 @@ The project follows a practical versioning model:
 
 ### Planned
 
-- Add the first real AI conversation flow
-- Add a terminal interface for text commands
-- Add environment configuration with `.env.example`
-- Add automated checks to the development workflow
+- Connect the orchestrator to a configured LLM provider
+- Add voice input and output adapters
+- Add deployment configuration
+
+## [0.1.1] - 2026-09-01
+
+### Added
+
+- Conversation, message, memory, and tool-audit models
+- Tool registry with risk metadata and confirmation policy
+- Safe `get_current_time` and `get_system_stats` tools
+- Orchestrator service for text interactions
+- CSRF-protected JSON endpoint at `/api/chat/`
+- Four integration tests for the core application
+- Environment-based Django settings
+- Dependency manifest and public `.env.example`
+
+### Changed
+
+- The README now distinguishes implemented capabilities from roadmap items.
+- The roadmap marks persistence, audit logging, safe tools, and the chat endpoint as complete.
+
+### Learning Notes
+
+- The domain workflow must be testable without an external LLM before cloud integration is added.
+- Risk metadata belongs to the tool contract, but the execution service must enforce it independently of model output.
+- CSRF protection should not be disabled just because an endpoint is intended for local use.
+- A release is easier to explain when documentation states exactly what is implemented and what is planned.
+
+### Verification
+
+- `python manage.py check`
+- `python manage.py makemigrations core`
+- `python manage.py migrate`
+- `python manage.py test core`
 
 ## [0.1.0] - 2026-09-01
 
