@@ -46,6 +46,22 @@ The roadmap requires diagnosable behavior, while the security model prohibits se
 - `python manage.py test core` — 13 tests passed
 - `git diff --check`
 
+## [0.1.10] - 2026-09-01
+
+### Fixed
+
+- Included the Django `LOGGING` configuration required to route structured audit events to the console.
+
+### Why
+
+The logger implementation and tests were present in `v0.1.9`, but the settings block was left unstaged. This corrective release makes the configured runtime behavior match the tested implementation.
+
+### Verification
+
+- `python manage.py check`
+- `python manage.py test core` — 13 tests passed
+- Working tree verified clean after publication
+
 ## [0.1.8] - 2026-09-01
 
 ### Added
