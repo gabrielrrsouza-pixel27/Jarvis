@@ -38,6 +38,8 @@ Rules:
 - Commit `.env.example` with placeholders only.
 - Rotate credentials immediately if they are exposed.
 - Never print API keys, passwords, or access tokens.
+- If a credential is exposed, revoke it before continuing development; replacing
+	the value in a local file is not sufficient.
 
 ## Prompt Injection
 

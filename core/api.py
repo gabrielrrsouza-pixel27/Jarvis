@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_protect
 
 from core.services.memory import MemoryService
+from core.models import Conversation
 from core.services.orchestrator import JarvisOrchestrator
 
 
@@ -14,12 +15,18 @@ def chat(request):
     try:
         payload = json.loads(request.body or '{}')
         tool_call = payload.get('tool_call') or {}
+        conversation = None
+        if payload.get('conversation_id') is not None:
+            conversation = Conversation.objects.get(id=payload['conversation_id'])
         result = JarvisOrchestrator().respond(
             text=payload.get('message', ''),
+            conversation=conversation,
             tool_name=payload.get('tool') or tool_call.get('name'),
             tool_parameters=payload.get('parameters') or tool_call.get('arguments'),
             confirmed=payload.get('confirmed', False),
         )
+    except Conversation.DoesNotExist:
+        return JsonResponse({'error': 'Conversation not found.'}, status=404)
     except (ValueError, TypeError, json.JSONDecodeError) as exc:
         return JsonResponse({'error': str(exc)}, status=400)
     except PermissionError as exc:

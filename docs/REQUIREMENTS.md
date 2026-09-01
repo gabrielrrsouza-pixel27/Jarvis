@@ -14,7 +14,7 @@ This document turns the project vision into testable requirements. A feature is 
 | FR-005 | Audit every tool execution | 0.1 | Implemented |
 | FR-006 | Store, search, and delete persistent memories | 0.2 | Implemented |
 | FR-007 | Connect the orchestrator to an LLM provider | 0.1 | Implemented |
-| FR-008 | Preserve session context across requests | 0.2 | In progress |
+| FR-008 | Preserve session context across requests | 0.2 | Implemented |
 | FR-009 | Accept structured tool-call requests with validated parameters | 0.3 | Implemented |
 | FR-009a | Let the LLM select tools automatically through provider tool calling | 0.3 | Implemented |
 | FR-010 | Require confirmation for high-risk actions | 0.3 | Partially implemented |

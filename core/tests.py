@@ -1,4 +1,5 @@
 import json
+import os
 from io import StringIO
 from unittest.mock import patch
 from urllib.error import HTTPError
@@ -100,6 +101,11 @@ class LLMServiceTests(TestCase):
 
 
 class ChatApiTests(TestCase):
+    def setUp(self):
+        self.api_key = patch.dict(os.environ, {'OPENAI_API_KEY': ''})
+        self.api_key.start()
+        self.addCleanup(self.api_key.stop)
+
     def test_chat_endpoint_accepts_json_message(self):
         response = self.client.post(
             reverse('chat'),
@@ -109,6 +115,35 @@ class ChatApiTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['answer'], 'JARVIS received: Test message')
+
+    def test_chat_endpoint_continues_existing_conversation(self):
+        first = self.client.post(
+            reverse('chat'),
+            data=json.dumps({'message': 'First message'}),
+            content_type='application/json',
+        )
+        conversation_id = first.json()['conversation_id']
+        second = self.client.post(
+            reverse('chat'),
+            data=json.dumps({
+                'message': 'Second message',
+                'conversation_id': conversation_id,
+            }),
+            content_type='application/json',
+        )
+
+        self.assertEqual(second.status_code, 200)
+        self.assertEqual(second.json()['conversation_id'], conversation_id)
+        self.assertEqual(Message.objects.filter(conversation_id=conversation_id).count(), 4)
+
+    def test_chat_endpoint_rejects_unknown_conversation(self):
+        response = self.client.post(
+            reverse('chat'),
+            data=json.dumps({'message': 'Hello', 'conversation_id': 9999}),
+            content_type='application/json',
+        )
+
+        self.assertEqual(response.status_code, 404)
 
     def test_chat_endpoint_accepts_structured_tool_call(self):
         response = self.client.post(

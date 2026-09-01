@@ -16,6 +16,35 @@ The project follows a practical versioning model:
 - Add voice input and output adapters
 - Add deployment configuration
 
+## [0.1.12] - 2026-09-01
+
+### Added
+
+- Conversation continuity through `conversation_id` on the chat API
+- `404` response for unknown conversation IDs
+- Test isolation that prevents API tests from using local credentials
+
+### Security
+
+- Removed the exposed OpenAI key from `.env` and `.env.example`.
+- Added documentation requiring exposed credentials to be revoked, not merely replaced locally.
+
+### Why
+
+The API created a new conversation for every request, which prevented context from surviving between messages. The exposed key also had to be neutralized before continuing development.
+
+### Learning Notes
+
+- A local `.env` is ignored by Git but can still cause accidental network calls during tests.
+- Secret rotation is mandatory after exposure because changing a local file does not invalidate the old credential.
+- Session continuity should be explicit in the API contract instead of inferred from global process state.
+
+### Verification
+
+- `python manage.py check`
+- `python manage.py test core` — 16 tests passed
+- Confirmed no secret remains in `.env.example`
+
 ## [0.1.11] - 2026-09-01
 
 ### Fixed
