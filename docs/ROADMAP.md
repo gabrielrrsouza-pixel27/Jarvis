@@ -30,6 +30,7 @@ The roadmap is incremental. Each version adds a capability on top of a verified 
 - [x] Define a common tool contract
 - [x] Create a tool registry
 - [x] Add safe time and system-stat tools
+- [x] Let the LLM select registered tools automatically
 - [ ] Add long-term memory storage
 - [x] Add tool-call audit logs
 - [x] Add confirmation policy for risky actions

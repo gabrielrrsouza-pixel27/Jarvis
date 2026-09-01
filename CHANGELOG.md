@@ -16,6 +16,34 @@ The project follows a practical versioning model:
 - Add voice input and output adapters
 - Add deployment configuration
 
+## [0.1.7] - 2026-09-01
+
+### Added
+
+- Automatic LLM tool selection through the provider's structured function-call response
+- Tool definitions sent to the provider as JSON-schema-compatible function definitions
+- End-to-end orchestrator test for a provider-selected tool
+
+### Security
+
+- Automatic tool calls still pass through the local registry, parameter validation, risk policy, and audit logging.
+- The LLM cannot bypass confirmation requirements by choosing a tool automatically.
+
+### Why
+
+Manual tool calls proved the execution contract. This increment connects the provider's decision to that contract without allowing model output to execute directly.
+
+### Learning Notes
+
+- Model output is untrusted input even when it follows a provider schema.
+- A single execution gateway keeps manual and automatic calls consistent.
+- Provider integration should be tested with a fake selector before any paid network call.
+
+### Verification
+
+- `python manage.py check`
+- `python manage.py test core` — 10 tests passed
+
 ## [0.1.6] - 2026-09-01
 
 ### Added

@@ -42,13 +42,25 @@ class JarvisOrchestrator:
                 {'role': message.role, 'content': message.content}
                 for message in conversation.messages.order_by('created_at')
             ]
-            answer = self.llm.respond([
+            messages = [
                 {
                     'role': 'system',
                     'content': 'You are JARVIS, a concise and safe personal assistant.',
                 },
                 *history,
-            ]) or f'JARVIS received: {text}'
+            ]
+            decision = self.llm.decide(messages, self.registry.definitions())
+            automatic_call = decision.get('tool_call')
+            if automatic_call:
+                tool_result = execute_tool(
+                    self.registry,
+                    automatic_call.get('name'),
+                    automatic_call.get('arguments'),
+                    confirmed,
+                )
+                answer = f"Tool {automatic_call['name']} completed successfully."
+            else:
+                answer = decision.get('content') or f'JARVIS received: {text}'
 
         Message.objects.create(
             conversation=conversation,

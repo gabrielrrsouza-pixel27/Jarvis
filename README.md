@@ -123,7 +123,7 @@ Jarvis.0_1/
 
 ## Current Status
 
-The current release is a local, testable foundation. It includes a Django web layer, conversation and memory persistence, a tool registry, safe starter tools, risk metadata, audit logging, an offline fallback, and an OpenAI-compatible LLM adapter. Voice, smart home, and deployment integrations remain tracked in the roadmap rather than being presented as completed features.
+The current release is a local, testable foundation. It includes a Django web layer, conversation and memory persistence, a tool registry, safe starter tools, risk metadata, audit logging, an offline fallback, and an OpenAI-compatible LLM adapter with automatic tool selection. Voice, smart home, and deployment integrations remain tracked in the roadmap rather than being presented as completed features.
 
 ## Prerequisites
 

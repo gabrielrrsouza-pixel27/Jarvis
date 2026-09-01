@@ -15,7 +15,7 @@ This document turns the project vision into testable requirements. A feature is 
 | FR-007 | Connect the orchestrator to an LLM provider | 0.1 | Implemented |
 | FR-008 | Preserve session context across requests | 0.2 | In progress |
 | FR-009 | Accept structured tool-call requests with validated parameters | 0.3 | Implemented |
-| FR-009a | Let the LLM select tools automatically through provider tool calling | 0.3 | Planned |
+| FR-009a | Let the LLM select tools automatically through provider tool calling | 0.3 | Implemented |
 | FR-010 | Require confirmation for high-risk actions | 0.3 | Partially implemented |
 | FR-011 | Capture and transcribe microphone input | 0.4 | Planned |
 | FR-012 | Synthesize assistant responses to audio | 0.4 | Planned |

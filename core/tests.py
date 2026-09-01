@@ -43,6 +43,22 @@ class JarvisOrchestratorTests(TestCase):
 
         self.assertEqual(result['answer'], 'JARVIS received: Offline test')
 
+    def test_orchestrator_executes_tool_selected_by_llm(self):
+        class SelectingLLM:
+            def decide(self, messages, tools):
+                return {
+                    'content': None,
+                    'tool_call': {
+                        'name': 'get_current_time',
+                        'arguments': {},
+                    },
+                }
+
+        result = JarvisOrchestrator(llm=SelectingLLM()).respond('Tell me the time')
+
+        self.assertIsNotNone(result['tool_result'])
+        self.assertTrue(ToolAuditLog.objects.get().success)
+
 
 class LLMServiceTests(TestCase):
     def test_unconfigured_service_does_not_make_network_request(self):

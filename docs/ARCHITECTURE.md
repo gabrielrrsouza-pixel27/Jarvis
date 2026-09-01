@@ -95,9 +95,10 @@ The chat API accepts a structured call in this shape:
 }
 ```
 
-The registry rejects unknown tools and parameters before execution. Automatic
-tool selection by the LLM is a separate milestone and is not assumed to be
-implemented by this request format alone.
+The registry rejects unknown tools and parameters before execution. The LLM
+adapter can now return the same structured `tool_call` shape automatically.
+Regardless of whether the call came from the API or the provider, the
+orchestrator sends it through the local registry and confirmation policy.
 
 ## Planned Data Flow
 
