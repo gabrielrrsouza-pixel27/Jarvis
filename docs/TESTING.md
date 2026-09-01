@@ -86,3 +86,6 @@ HTTPS settings.
 
 Memory tests verify that related topic words rank the relevant memory before
 unrelated memories.
+
+Voice tests verify speech/silence classification for valid PCM frames and
+rejection of malformed frames without audio hardware.

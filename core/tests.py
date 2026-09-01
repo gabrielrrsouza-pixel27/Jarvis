@@ -13,6 +13,7 @@ from core.services.orchestrator import JarvisOrchestrator
 from core.services.llm import LLMService
 from core.services.audit import sanitize
 from core.services.voice import (
+    EnergyVAD,
     Utf8SpeechToText,
     Utf8TextToSpeech,
     VoicePipeline,
@@ -249,6 +250,19 @@ class TerminalCommandTests(TestCase):
 
 
 class VoicePipelineTests(TestCase):
+    def test_energy_vad_detects_speech_and_silence(self):
+        vad = EnergyVAD(threshold=500)
+
+        silence = b'\x00\x00' * 40
+        speech = b'\x00\x10' * 40
+
+        self.assertFalse(vad.is_speech(silence))
+        self.assertTrue(vad.is_speech(speech))
+
+    def test_energy_vad_rejects_invalid_pcm_frame(self):
+        with self.assertRaisesMessage(ValueError, '16-bit PCM samples'):
+            EnergyVAD().is_speech(b'\x00')
+
     def test_offline_voice_pipeline_transcribes_and_synthesizes(self):
         pipeline = VoicePipeline(
             transcriber=Utf8SpeechToText(),

@@ -24,6 +24,7 @@ This document turns the project vision into testable requirements. A feature is 
 | FR-011 | Capture and transcribe microphone input | 0.4 | Planned |
 | FR-012 | Synthesize assistant responses to audio | 0.4 | Planned |
 | FR-012a | Process audio through replaceable STT, Core, and TTS adapters | 0.4 | Implemented offline |
+| FR-012b | Detect speech activity locally from PCM audio frames | 0.4 | Implemented |
 | FR-013 | Detect a local wake word | 0.5 | Planned |
 | FR-014 | Control authorized computer actions | 0.6 | Planned |
 | FR-015 | Control music playback and output devices | 0.7-0.8 | Planned |

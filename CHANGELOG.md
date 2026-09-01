@@ -16,6 +16,34 @@ The project follows a practical versioning model:
 - Add voice input and output adapters
 - Add deployment configuration
 
+## [0.1.23] - 2026-09-01
+
+### Added
+
+- Local `VoiceActivityDetector` contract
+- Dependency-free `EnergyVAD` for signed 16-bit PCM mono frames
+- Configurable energy threshold for speech detection
+- Tests for speech, silence, and malformed audio frames
+
+### Changed
+
+- The voice roadmap now separates local VAD from future microphone, Whisper, and TTS integrations.
+
+### Why
+
+VAD is the gate between continuous microphone input and speech transcription. Implementing its local contract first keeps audio processing private and gives the future capture adapter a testable boundary.
+
+### Learning Notes
+
+- Audio components need explicit format contracts before hardware integration.
+- A simple energy detector is useful for the first prototype but is not noise-robust production speech detection.
+- Privacy-sensitive audio processing should remain local by default.
+
+### Verification
+
+- `python manage.py check`
+- `python manage.py test core` — 24 tests passed
+
 ## [0.1.22] - 2026-09-01
 
 ### Added

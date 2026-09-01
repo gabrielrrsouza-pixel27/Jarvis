@@ -41,6 +41,7 @@ The roadmap is incremental. Each version adds a capability on top of a verified 
 
 - [x] Define replaceable STT/TTS pipeline contracts
 - [x] Add offline voice adapters for development and tests
+- [x] Add local PCM energy-based VAD
 - [ ] Integrate Whisper STT
 - [ ] Integrate TTS
 - [ ] Capture microphone input

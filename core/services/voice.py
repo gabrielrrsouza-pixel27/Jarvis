@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+import struct
 from typing import Protocol
 
 from core.services.orchestrator import JarvisOrchestrator
@@ -12,6 +13,27 @@ class SpeechToText(Protocol):
 class TextToSpeech(Protocol):
     def synthesize(self, text: str) -> bytes:
         ...
+
+
+class VoiceActivityDetector(Protocol):
+    def is_speech(self, audio_frame: bytes) -> bool:
+        ...
+
+
+class EnergyVAD:
+    """Small local VAD for signed 16-bit PCM mono frames."""
+
+    def __init__(self, threshold: int = 500) -> None:
+        if threshold < 0:
+            raise ValueError('VAD threshold cannot be negative.')
+        self.threshold = threshold
+
+    def is_speech(self, audio_frame: bytes) -> bool:
+        if not audio_frame or len(audio_frame) % 2:
+            raise ValueError('Audio frame must contain 16-bit PCM samples.')
+        samples = struct.unpack(f'<{len(audio_frame) // 2}h', audio_frame)
+        average_energy = sum(abs(sample) for sample in samples) / len(samples)
+        return average_energy >= self.threshold
 
 
 @dataclass(frozen=True)

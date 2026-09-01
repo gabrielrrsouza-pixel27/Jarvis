@@ -40,6 +40,11 @@ adapter, sends the transcript through `JarvisOrchestrator`, and passes the
 answer to a TTS adapter. UTF-8 adapters provide an offline test path. Real
 microphone capture, Whisper, VAD, and cloud TTS remain separate integrations.
 
+The first VAD implementation is local and dependency-free. `EnergyVAD` accepts
+signed 16-bit PCM mono frames and classifies them by average sample energy. It
+is a foundation for a streaming capture adapter, not a replacement for a
+production noise-robust VAD such as Silero or WebRTC VAD.
+
 ## Text Interaction Flow
 
 ```text
