@@ -203,6 +203,17 @@ Make sure to keep the following in a `.env` file and never commit it to version 
 - Redis configuration
 - third-party service tokens
 
+## Documentation
+
+The project is documented as it evolves from the first prototype to deployment:
+
+- [Project vision](docs/PROJECT_VISION.md)
+- [Architecture](docs/ARCHITECTURE.md)
+- [Security model](docs/SECURITY.md)
+- [Testing strategy](docs/TESTING.md)
+- [Roadmap](docs/ROADMAP.md)
+- [Changelog and learning notes](CHANGELOG.md)
+
 ## Testing
 
 ```bash
