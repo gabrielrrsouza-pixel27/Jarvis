@@ -3,7 +3,7 @@ import json
 from django.test import TestCase
 from django.urls import reverse
 
-from core.models import Message, ToolAuditLog
+from core.models import Memory, Message, ToolAuditLog
 from core.services.orchestrator import JarvisOrchestrator
 
 
@@ -40,3 +40,25 @@ class ChatApiTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['answer'], 'JARVIS received: Test message')
+
+
+class MemoryTests(TestCase):
+    def test_memory_can_be_saved_searched_and_deleted(self):
+        create_response = self.client.post(
+            reverse('memories'),
+            data=json.dumps({
+                'content': 'User prefers concise answers',
+                'category': 'preference',
+                'importance': 8,
+            }),
+            content_type='application/json',
+        )
+        memory_id = create_response.json()['id']
+
+        self.assertEqual(create_response.status_code, 201)
+        search_response = self.client.get(reverse('memories') + '?q=concise')
+        self.assertEqual(len(search_response.json()['memories']), 1)
+
+        delete_response = self.client.delete(reverse('forget-memory', args=[memory_id]))
+        self.assertEqual(delete_response.status_code, 200)
+        self.assertFalse(Memory.objects.filter(id=memory_id).exists())

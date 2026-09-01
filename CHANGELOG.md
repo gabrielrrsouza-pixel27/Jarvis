@@ -16,6 +16,36 @@ The project follows a practical versioning model:
 - Add voice input and output adapters
 - Add deployment configuration
 
+## [0.1.3] - 2026-09-01
+
+### Added
+
+- Formal functional and non-functional requirements specification
+- `MemoryService` for saving, searching, and forgetting memories
+- `GET` and `POST /api/memories/` endpoints
+- `DELETE /api/memories/<id>/` endpoint
+- Automated memory lifecycle test
+
+### Changed
+
+- The README links to the requirements specification.
+- The roadmap marks verified memory and tool capabilities as complete.
+
+### Why
+
+The assistant needs an explicit memory contract before adding an LLM. This lets the future model use memory through a tested service instead of writing directly to the database.
+
+### Learning Notes
+
+- Persistence needs a user-facing lifecycle: save, retrieve, and forget.
+- Requirements should distinguish implemented behavior from planned integrations.
+- API validation and business rules belong in a service boundary reusable by HTTP, terminal, and voice interfaces.
+
+### Verification
+
+- `python manage.py check`
+- `python manage.py test core` — 5 tests passed
+
 ## [0.1.1] - 2026-09-01
 
 ### Added

@@ -18,20 +18,21 @@ The roadmap is incremental. Each version adds a capability on top of a verified 
 
 ## 0.2 — Conversation memory
 
-- [ ] Store session message history
-- [ ] Persist conversations and messages
+- [x] Store session message history
+- [x] Persist conversations and messages
+- [x] Store, search, and delete persistent memories
 - [ ] Add PostgreSQL configuration
 - [ ] Add SQLAlchemy and Alembic where required
 - [ ] Create the first database migration
 
 ## 0.3 — Tools and MVP
 
-- [ ] Define `BaseTool`
-- [ ] Create a tool registry
-- [ ] Add safe time and system-stat tools
+- [x] Define a common tool contract
+- [x] Create a tool registry
+- [x] Add safe time and system-stat tools
 - [ ] Add long-term memory storage
-- [ ] Add structured tool-call audit logs
-- [ ] Add confirmation policy for risky actions
+- [x] Add tool-call audit logs
+- [x] Add confirmation policy for risky actions
 
 ## 0.4 — Voice
 

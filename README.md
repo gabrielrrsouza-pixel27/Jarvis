@@ -215,6 +215,7 @@ The project is documented as it evolves from the first prototype to deployment:
 - [Architecture](docs/ARCHITECTURE.md)
 - [Security model](docs/SECURITY.md)
 - [Testing strategy](docs/TESTING.md)
+- [Requirements specification](docs/REQUIREMENTS.md)
 - [Roadmap](docs/ROADMAP.md)
 - [Changelog and learning notes](CHANGELOG.md)
 

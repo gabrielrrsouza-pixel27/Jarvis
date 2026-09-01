@@ -74,4 +74,4 @@ The current Django foundation is verified with:
 .\.venv\Scripts\python.exe manage.py test core
 ```
 
-The first command validates Django configuration. The second validates the starter application and homepage behavior.
+The first command validates Django configuration. The second validates the core application, chat endpoint, tool execution, and memory lifecycle against a test database.
