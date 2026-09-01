@@ -41,6 +41,18 @@ Rules:
 - If a credential is exposed, revoke it before continuing development; replacing
 	the value in a local file is not sufficient.
 
+Production also requires a random `DJANGO_SECRET_KEY` with at least 50
+characters and a real email backend. The console email backend is development
+only.
+
+## Production Settings
+
+Run production with `DJANGO_DEBUG=false`, a unique `DJANGO_SECRET_KEY`, an
+explicit `DJANGO_ALLOWED_HOSTS` list, and HTTPS terminated at the application or
+trusted reverse proxy. In this mode, JARVIS enables secure session and CSRF
+cookies, HSTS, content-type protection, same-origin referrer policy, and frame
+denial. Never enable HSTS until HTTPS is correctly configured for the domain.
+
 ## Prompt Injection
 
 User content and retrieved documents are untrusted input. The system must not treat text such as "ignore previous instructions" as permission to bypass security controls.
@@ -81,5 +93,6 @@ page to receive the CSRF cookie before making a state-changing request.
 - [x] Tool parameters are validated
 - [x] Required fields and primitive parameter types are validated
 - [x] Structured audit events redact sensitive fields
+- [x] Production settings reject the development secret
 - [ ] Dependencies are checked for known vulnerabilities
 - [ ] Infrastructure details are not unnecessarily exposed

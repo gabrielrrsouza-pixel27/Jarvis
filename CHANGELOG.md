@@ -16,6 +16,65 @@ The project follows a practical versioning model:
 - Add voice input and output adapters
 - Add deployment configuration
 
+## [0.1.18] - 2026-09-01
+
+### Added
+
+- Production validation requiring a 50-character Django secret
+- Conditional SMTP email backend for production
+- Deployment documentation for the email backend and secret length
+
+### Security
+
+- Production configuration now rejects short or development-only secrets.
+- Development console email remains available only when debug mode is enabled.
+
+### Why
+
+The first deployment check exposed two unsafe production defaults that could silently pass from local development into deployment.
+
+### Learning Notes
+
+- Django's deployment checks catch infrastructure defaults that unit tests do not.
+- A production secret must be both non-default and sufficiently long.
+- Development-only services should be selected explicitly by environment.
+
+### Verification
+
+- `python manage.py check`
+- `python manage.py test core` — 19 tests passed
+- `python manage.py check --deploy` with simulated production settings
+
+## [0.1.17] - 2026-09-01
+
+### Added
+
+- Production validation that rejects the development Django secret
+- Secure production cookies and HTTPS redirect
+- HSTS, frame denial, content-type sniffing protection, and referrer policy
+- Configurable CSRF trusted origins
+- Production hardening documentation and requirement
+
+### Security
+
+- Debug mode remains convenient locally, but production mode now requires explicit secret configuration.
+- Session and CSRF cookies become secure when `DJANGO_DEBUG=false`.
+
+### Why
+
+The project is intended for a public portfolio and future deployment. Secure defaults must be enforced by configuration rather than relying on memory or manual setup steps.
+
+### Learning Notes
+
+- Development defaults are useful only when they cannot silently reach production.
+- HTTPS settings must be conditional so local HTTP development continues to work.
+- Security headers protect the deployed application but do not replace authentication, authorization, or dependency updates.
+
+### Verification
+
+- `python manage.py check`
+- `python manage.py test core` — 19 tests passed before this settings-only change
+
 ## [0.1.16] - 2026-09-01
 
 ### Added

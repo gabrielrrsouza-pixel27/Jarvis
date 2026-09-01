@@ -47,6 +47,7 @@ This document turns the project vision into testable requirements. A feature is 
 | NFR-011 | Maintainability | New tools follow one documented interface | Implemented through `Tool` and `ToolRegistry` |
 | NFR-012 | Data integrity | Schema changes use versioned Django migrations | Implemented |
 | NFR-013 | Database portability | Select SQLite or PostgreSQL through `DB_URL` | Implemented |
+| NFR-014 | Production hardening | Debug off requires a real secret and enables secure cookie/HTTPS settings | Implemented |
 
 ## Requirement Workflow
 
