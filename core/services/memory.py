@@ -1,4 +1,22 @@
+import re
+
 from core.models import Memory
+
+
+STOP_WORDS = {
+    'a', 'as', 'ao', 'aos', 'com', 'como', 'da', 'das', 'de', 'do', 'dos',
+    'e', 'em', 'essa', 'esse', 'esta', 'este', 'eu', 'for', 'na', 'nas',
+    'no', 'nos', 'o', 'os', 'para', 'por', 'que', 'se', 'sobre', 'um',
+    'uma', 'voce', 'you', 'the', 'what', 'should', 'use', 'i', 'is', 'my',
+}
+
+
+def _keywords(value: str) -> set[str]:
+    return {
+        word.lower()
+        for word in re.findall(r'[A-Za-zÀ-ÿ0-9]+', value)
+        if len(word) > 2 and word.lower() not in STOP_WORDS
+    }
 
 
 class MemoryService:
@@ -24,7 +42,16 @@ class MemoryService:
     def relevant_context(self, query: str, limit: int = 5) -> list[Memory]:
         if limit < 1:
             raise ValueError('Memory context limit must be positive.')
-        return self.search(query)[:limit]
+        query_keywords = _keywords(query)
+        memories = list(Memory.objects.all())
+        ranked = []
+        for memory in memories:
+            overlap = query_keywords & _keywords(memory.content)
+            if overlap:
+                score = (len(overlap), memory.importance, memory.updated_at)
+                ranked.append((score, memory))
+        ranked.sort(key=lambda item: item[0], reverse=True)
+        return [memory for _, memory in ranked[:limit]]
 
     def forget(self, memory_id: int) -> None:
         deleted, _ = Memory.objects.filter(id=memory_id).delete()

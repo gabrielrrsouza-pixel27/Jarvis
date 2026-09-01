@@ -16,7 +16,8 @@ This document turns the project vision into testable requirements. A feature is 
 | FR-006 | Store, search, and delete persistent memories | 0.2 | Implemented |
 | FR-007 | Connect the orchestrator to an LLM provider | 0.1 | Implemented |
 | FR-008 | Preserve session context across requests | 0.2 | Implemented |
-| FR-008a | Retrieve bounded relevant memories before an LLM response | 0.2 | Implemented |
+| FR-008a | Retrieve bounded relevant memories before an LLM response | 0.2 | Implemented with topic matching |
+| FR-008b | Use semantic embeddings for memory retrieval | 1.2 | Planned |
 | FR-009 | Accept structured tool-call requests with validated parameters | 0.3 | Implemented |
 | FR-009a | Let the LLM select tools automatically through provider tool calling | 0.3 | Implemented |
 | FR-010 | Require confirmation for high-risk actions | 0.3 | Implemented in execution boundary |

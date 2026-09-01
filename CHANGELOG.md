@@ -16,6 +16,34 @@ The project follows a practical versioning model:
 - Add voice input and output adapters
 - Add deployment configuration
 
+## [0.1.22] - 2026-09-01
+
+### Added
+
+- Topic-based memory ranking using normalized word overlap
+- Stop-word filtering for Portuguese and English queries
+- Test coverage for recalling a memory from related topic wording
+
+### Changed
+
+- Relevant memories are now ranked by shared topic words, then importance and recency.
+- Documentation distinguishes lightweight local recall from future embedding-based RAG.
+
+### Why
+
+The assistant should remember a preference when the user returns to the subject, even if the question is phrased differently. Topic matching improves recall without adding a cloud dependency or pretending that semantic embeddings already exist.
+
+### Learning Notes
+
+- Simple retrieval should be useful before introducing vector infrastructure.
+- Relevance ranking needs a bounded result set to control prompt size.
+- Retrieval quality must remain explicit in the documentation: keyword matching is not semantic understanding.
+
+### Verification
+
+- `python manage.py check`
+- `python manage.py test core` — 22 tests passed
+
 ## [0.1.21] - 2026-09-01
 
 ### Fixed

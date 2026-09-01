@@ -123,7 +123,7 @@ Jarvis.0_1/
 
 ## Current Status
 
-The current release is a local, testable foundation. It includes a Django web layer, conversation and memory persistence with bounded context retrieval, a tool registry, three tested starter tools (current time, system status, and persistent memory), risk metadata, database and JSON audit logging with sensitive-field redaction, an offline fallback, and an OpenAI-compatible LLM adapter with automatic tool selection. Voice, smart home, and deployment integrations remain tracked in the roadmap rather than being presented as completed features.
+The current release is a local, testable foundation. It includes a Django web layer, conversation and memory persistence with bounded topic-based context retrieval, a tool registry, three tested starter tools (current time, system status, and persistent memory), risk metadata, database and JSON audit logging with sensitive-field redaction, an offline fallback, and an OpenAI-compatible LLM adapter with automatic tool selection. Voice, smart home, and deployment integrations remain tracked in the roadmap rather than being presented as completed features.
 
 ## Prerequisites
 

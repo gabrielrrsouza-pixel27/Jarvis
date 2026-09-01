@@ -127,6 +127,16 @@ class AuditLoggingTests(TestCase):
         self.assertIn('User prefers concise answers', context)
         self.assertIn('untrusted user memories', context)
 
+    def test_relevant_context_ranks_memory_by_shared_topic_words(self):
+        Memory.objects.create(content='User prefers concise technical answers', importance=5)
+        Memory.objects.create(content='User enjoys electronic music', importance=10)
+
+        memories = JarvisOrchestrator(llm=LLMService(api_key='')).memory.relevant_context(
+            'How should the technical answer be written?',
+        )
+
+        self.assertEqual(memories[0].content, 'User prefers concise technical answers')
+
 
 class LLMServiceTests(TestCase):
     def test_unconfigured_service_does_not_make_network_request(self):

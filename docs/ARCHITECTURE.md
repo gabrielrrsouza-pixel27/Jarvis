@@ -112,6 +112,10 @@ local development and tests; PostgreSQL is supported for deployment with the
 same Django models and migrations. Redis is reserved for fast session state and
 queues. `pgvector` is planned for semantic memory and RAG.
 
+Current memory recall uses normalized topic-word overlap with a five-record
+limit. This is intentionally lightweight and local; embedding-based semantic
+retrieval is reserved for the RAG milestone.
+
 ## Architecture Decisions
 
 - Python is the primary language because of its AI and automation ecosystem.
