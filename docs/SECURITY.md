@@ -52,6 +52,7 @@ Required protections:
 - Apply risk checks independently of the LLM response.
 - Require confirmation for destructive operations.
 - Record tool calls for later review.
+- Mark retrieved memories as untrusted context and never treat them as system instructions.
 
 ## Audit Logging
 

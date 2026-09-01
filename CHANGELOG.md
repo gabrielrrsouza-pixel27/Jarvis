@@ -16,6 +16,34 @@ The project follows a practical versioning model:
 - Add voice input and output adapters
 - Add deployment configuration
 
+## [0.1.16] - 2026-09-01
+
+### Added
+
+- Bounded retrieval of relevant memories before an LLM decision
+- Explicit untrusted-memory context block in the prompt
+- Test proving relevant memory reaches the LLM adapter
+
+### Security
+
+- Retrieved memories are context only and cannot override system instructions.
+- Context retrieval is limited to five records to avoid unbounded prompt growth.
+
+### Why
+
+Conversation history alone does not provide continuity across sessions. This increment connects persistent memory to the orchestration path while preserving the security boundary required by the architecture.
+
+### Learning Notes
+
+- Persistent storage becomes useful only when it is deliberately retrieved at decision time.
+- Text search is a temporary retrieval strategy; semantic embeddings and RAG remain future work.
+- Stored user content must be treated as untrusted input even when it originated inside the application.
+
+### Verification
+
+- `python manage.py check`
+- `python manage.py test core` — 19 tests passed
+
 ## [0.1.15] - 2026-09-01
 
 ### Added

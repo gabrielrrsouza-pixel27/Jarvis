@@ -16,6 +16,7 @@ This document turns the project vision into testable requirements. A feature is 
 | FR-006 | Store, search, and delete persistent memories | 0.2 | Implemented |
 | FR-007 | Connect the orchestrator to an LLM provider | 0.1 | Implemented |
 | FR-008 | Preserve session context across requests | 0.2 | Implemented |
+| FR-008a | Retrieve bounded relevant memories before an LLM response | 0.2 | Implemented |
 | FR-009 | Accept structured tool-call requests with validated parameters | 0.3 | Implemented |
 | FR-009a | Let the LLM select tools automatically through provider tool calling | 0.3 | Implemented |
 | FR-010 | Require confirmation for high-risk actions | 0.3 | Implemented in execution boundary |
@@ -35,6 +36,7 @@ This document turns the project vision into testable requirements. A feature is 
 | NFR-001 | Security | High-risk actions require explicit confirmation | Implemented in execution boundary |
 | NFR-002 | Privacy | Secrets remain in environment variables and sensitive values stay out of logs | Implemented for current code |
 | NFR-003 | Modularity | Domain services do not depend on HTTP request objects | Implemented in core services |
+| NFR-003a | Prompt safety | Retrieved memories are marked as untrusted context | Implemented |
 | NFR-004 | Testability | Critical behavior has automated tests | Implemented for current MVP |
 | NFR-005 | Reliability | Tool and provider failures become controlled responses and audit records | Implemented for registered tools and LLM fallback |
 | NFR-006 | Performance | Simple text response target under 2 seconds locally | To be measured after LLM integration |

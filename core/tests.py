@@ -104,6 +104,24 @@ class AuditLoggingTests(TestCase):
         self.assertIsNotNone(result['tool_result'])
         self.assertTrue(ToolAuditLog.objects.get().success)
 
+    def test_relevant_memory_is_added_as_untrusted_context(self):
+        Memory.objects.create(content='User prefers concise answers', category='preference')
+
+        class CapturingLLM:
+            def __init__(self):
+                self.messages = []
+
+            def decide(self, messages, tools):
+                self.messages = messages
+                return {'content': 'Understood.', 'tool_call': None}
+
+        llm = CapturingLLM()
+        JarvisOrchestrator(llm=llm).respond('concise')
+
+        context = llm.messages[1]['content']
+        self.assertIn('User prefers concise answers', context)
+        self.assertIn('untrusted user memories', context)
+
 
 class LLMServiceTests(TestCase):
     def test_unconfigured_service_does_not_make_network_request(self):

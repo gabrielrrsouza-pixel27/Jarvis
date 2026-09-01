@@ -21,6 +21,11 @@ class MemoryService:
             memories = memories.filter(content__icontains=query)
         return list(memories)
 
+    def relevant_context(self, query: str, limit: int = 5) -> list[Memory]:
+        if limit < 1:
+            raise ValueError('Memory context limit must be positive.')
+        return self.search(query)[:limit]
+
     def forget(self, memory_id: int) -> None:
         deleted, _ = Memory.objects.filter(id=memory_id).delete()
         if not deleted:
