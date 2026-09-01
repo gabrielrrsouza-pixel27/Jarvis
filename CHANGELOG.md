@@ -16,6 +16,34 @@ The project follows a practical versioning model:
 - Add voice input and output adapters
 - Add deployment configuration
 
+## [0.1.5] - 2026-09-01
+
+### Fixed
+
+- Homepage now issues the CSRF cookie required by protected JSON requests.
+- README now documents a working PowerShell API request with CSRF handling.
+
+### Security
+
+- Kept CSRF protection enabled for chat and memory state-changing endpoints.
+- Added a real end-to-end check proving the protected chat request succeeds with a valid token.
+
+### Why
+
+The first command-line example reached Django but received `403` because it did not establish a CSRF session. The fix preserves the security boundary and makes the documented client flow usable.
+
+### Learning Notes
+
+- Activating a virtual environment and starting a server are separate operations.
+- A protected API example must show the complete cookie and header exchange, not only the POST body.
+- Security failures should be fixed at the client workflow or authentication boundary, not bypassed in production code.
+
+### Verification
+
+- `python manage.py check`
+- `python manage.py test core` — 7 tests passed
+- Real PowerShell request to `/api/chat/` — returned `conversation_id` and offline response
+
 ## [0.1.4] - 2026-09-01
 
 ### Added

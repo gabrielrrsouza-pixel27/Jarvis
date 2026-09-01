@@ -190,6 +190,28 @@ alembic upgrade head
 python manage.py runserver
 ```
 
+To call the protected chat endpoint from PowerShell, create a session first so
+Django can issue the CSRF cookie:
+
+```powershell
+$session = New-Object Microsoft.PowerShell.Commands.WebRequestSession
+Invoke-WebRequest `
+  -UseBasicParsing `
+  -Uri http://127.0.0.1:8000/ `
+  -WebSession $session | Out-Null
+
+$csrf = $session.Cookies.GetCookies('http://127.0.0.1:8000/')['csrftoken'].Value
+$body = @{ message = 'Hello, JARVIS' } | ConvertTo-Json
+
+Invoke-RestMethod `
+  -Uri http://127.0.0.1:8000/api/chat/ `
+  -WebSession $session `
+  -Headers @{ 'X-CSRFToken' = $csrf; Referer = 'http://127.0.0.1:8000/' } `
+  -Method Post `
+  -ContentType 'application/json' `
+  -Body $body
+```
+
 For the Python package-based runtime version:
 
 ```bash

@@ -63,6 +63,12 @@ A tool audit record should include the module, action, sanitized parameters, res
 - Encrypt and test backups.
 - Apply schema changes through versioned migrations.
 
+## API Requests
+
+The JSON API keeps Django CSRF protection enabled. A browser must send the
+`X-CSRFToken` header, and command-line clients should first request the home
+page to receive the CSRF cookie before making a state-changing request.
+
 ## Release Checklist
 
 - [ ] No secrets in source code or Git history
