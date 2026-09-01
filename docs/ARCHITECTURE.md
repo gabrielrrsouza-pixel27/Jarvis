@@ -35,6 +35,11 @@ Microphone → Wake Word → VAD → STT → JARVIS CORE → LLM → Tools → T
 
 Wake word detection and VAD should run locally whenever possible. Cloud services are used for STT, TTS, and LLM capabilities when configured.
 
+The current voice slice is adapter-based: `VoicePipeline` accepts an STT
+adapter, sends the transcript through `JarvisOrchestrator`, and passes the
+answer to a TTS adapter. UTF-8 adapters provide an offline test path. Real
+microphone capture, Whisper, VAD, and cloud TTS remain separate integrations.
+
 ## Text Interaction Flow
 
 ```text

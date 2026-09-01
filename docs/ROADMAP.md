@@ -39,6 +39,8 @@ The roadmap is incremental. Each version adds a capability on top of a verified 
 
 ## 0.4 — Voice
 
+- [x] Define replaceable STT/TTS pipeline contracts
+- [x] Add offline voice adapters for development and tests
 - [ ] Integrate Whisper STT
 - [ ] Integrate TTS
 - [ ] Capture microphone input

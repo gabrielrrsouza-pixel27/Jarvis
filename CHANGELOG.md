@@ -16,6 +16,31 @@ The project follows a practical versioning model:
 - Add voice input and output adapters
 - Add deployment configuration
 
+## [0.1.20] - 2026-09-01
+
+### Added
+
+- Replaceable `SpeechToText` and `TextToSpeech` contracts
+- `VoicePipeline` connecting audio, the JARVIS Core, and synthesized output
+- Offline UTF-8 adapters for deterministic development and tests
+- Voice pipeline tests without microphone hardware or cloud credentials
+- Test-mode isolation from production HTTPS redirects
+
+### Why
+
+Voice is the next roadmap block, but hardware and provider integrations are expensive to debug. Establishing the adapter contract first lets the text core remain the source of truth while real STT/TTS implementations are added safely.
+
+### Learning Notes
+
+- Hardware-facing features should begin with deterministic adapters and contracts.
+- Test settings must remain compatible with the production security model without weakening production behavior.
+- A voice pipeline should orchestrate existing domain services rather than duplicate assistant logic.
+
+### Verification
+
+- `python manage.py check`
+- `python manage.py test core` — 21 tests passed
+
 ## [0.1.19] - 2026-09-01
 
 ### Fixed

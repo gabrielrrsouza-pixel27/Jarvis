@@ -12,6 +12,11 @@ from core.models import Memory, Message, ToolAuditLog
 from core.services.orchestrator import JarvisOrchestrator
 from core.services.llm import LLMService
 from core.services.audit import sanitize
+from core.services.voice import (
+    Utf8SpeechToText,
+    Utf8TextToSpeech,
+    VoicePipeline,
+)
 
 
 class HomePageTests(TestCase):
@@ -231,3 +236,23 @@ class TerminalCommandTests(TestCase):
 
         self.assertIn('JARVIS: JARVIS received: Hello from terminal', output.getvalue())
         self.assertEqual(Message.objects.count(), 2)
+
+
+class VoicePipelineTests(TestCase):
+    def test_offline_voice_pipeline_transcribes_and_synthesizes(self):
+        pipeline = VoicePipeline(
+            transcriber=Utf8SpeechToText(),
+            synthesizer=Utf8TextToSpeech(),
+            orchestrator=JarvisOrchestrator(llm=LLMService(api_key='')),
+        )
+
+        result = pipeline.process(b'Hello from voice')
+
+        self.assertEqual(result.transcript, 'Hello from voice')
+        self.assertEqual(result.audio, result.answer.encode('utf-8'))
+
+    def test_voice_pipeline_rejects_empty_audio(self):
+        pipeline = VoicePipeline(Utf8SpeechToText(), Utf8TextToSpeech())
+
+        with self.assertRaisesMessage(ValueError, 'Audio input cannot be empty.'):
+            pipeline.process(b'')

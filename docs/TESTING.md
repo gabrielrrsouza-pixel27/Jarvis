@@ -79,3 +79,7 @@ The first command validates Django configuration. The second validates the core 
 
 The terminal command is covered by an integration test that runs an offline
 conversation and exits through the `:quit` command.
+
+The offline voice pipeline is covered without microphone hardware or cloud
+credentials. Tests also run safely when a local environment uses production
+HTTPS settings.

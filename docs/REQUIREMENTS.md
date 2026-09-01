@@ -22,6 +22,7 @@ This document turns the project vision into testable requirements. A feature is 
 | FR-010 | Require confirmation for high-risk actions | 0.3 | Implemented in execution boundary |
 | FR-011 | Capture and transcribe microphone input | 0.4 | Planned |
 | FR-012 | Synthesize assistant responses to audio | 0.4 | Planned |
+| FR-012a | Process audio through replaceable STT, Core, and TTS adapters | 0.4 | Implemented offline |
 | FR-013 | Detect a local wake word | 0.5 | Planned |
 | FR-014 | Control authorized computer actions | 0.6 | Planned |
 | FR-015 | Control music playback and output devices | 0.7-0.8 | Planned |
@@ -48,6 +49,7 @@ This document turns the project vision into testable requirements. A feature is 
 | NFR-012 | Data integrity | Schema changes use versioned Django migrations | Implemented |
 | NFR-013 | Database portability | Select SQLite or PostgreSQL through `DB_URL` | Implemented |
 | NFR-014 | Production hardening | Debug off requires a real secret and enables secure cookie/HTTPS settings | Implemented |
+| NFR-015 | Test isolation | Production HTTPS settings must not redirect the automated test client | Implemented |
 
 ## Requirement Workflow
 
