@@ -1,6 +1,7 @@
 import json
 from io import StringIO
 from unittest.mock import patch
+from urllib.error import HTTPError
 
 from django.core.management import call_command
 from django.test import TestCase
@@ -20,7 +21,7 @@ class HomePageTests(TestCase):
 
 class JarvisOrchestratorTests(TestCase):
     def test_response_persists_conversation_messages(self):
-        result = JarvisOrchestrator().respond('Hello JARVIS')
+        result = JarvisOrchestrator(llm=LLMService(api_key='')).respond('Hello JARVIS')
 
         self.assertEqual(result['answer'], 'JARVIS received: Hello JARVIS')
         self.assertEqual(Message.objects.count(), 2)
@@ -36,7 +37,7 @@ class JarvisOrchestratorTests(TestCase):
 
     def test_tool_execution_emits_structured_sanitized_log(self):
         with self.assertLogs('jarvis.audit', level='INFO') as captured:
-            JarvisOrchestrator().respond(
+            JarvisOrchestrator(llm=LLMService(api_key='')).respond(
                 'What time is it?',
                 tool_name='get_current_time',
             )
@@ -87,6 +88,15 @@ class LLMServiceTests(TestCase):
 
         self.assertFalse(service.configured)
         self.assertIsNone(service.respond([{'role': 'user', 'content': 'Hello'}]))
+
+    def test_rate_limit_becomes_controlled_runtime_error(self):
+        def rate_limited(*args, **kwargs):
+            raise HTTPError('https://api.openai.com/v1/chat/completions', 429, 'Too Many Requests', {}, None)
+
+        service = LLMService(api_key='test-key', urlopen=rate_limited)
+
+        with self.assertRaisesMessage(RuntimeError, 'LLM rate limit or quota reached'):
+            service.decide([], [])
 
 
 class ChatApiTests(TestCase):
@@ -140,7 +150,9 @@ class TerminalCommandTests(TestCase):
     def test_terminal_command_runs_offline_session_until_exit(self):
         output = StringIO()
         with patch('builtins.input', side_effect=['Hello from terminal', ':quit']):
-            call_command('jarvis_chat', stdout=output)
+            with patch('core.services.orchestrator.LLMService') as llm_class:
+                llm_class.return_value = LLMService(api_key='')
+                call_command('jarvis_chat', stdout=output)
 
         self.assertIn('JARVIS: JARVIS received: Hello from terminal', output.getvalue())
         self.assertEqual(Message.objects.count(), 2)

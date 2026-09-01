@@ -262,6 +262,10 @@ python manage.py test core
 
 The implementation history and learning notes are maintained in [CHANGELOG.md](CHANGELOG.md).
 
+If the provider returns a rate-limit or quota error, JARVIS records a sanitized
+`llm_error` event and uses the local fallback instead of terminating the
+terminal session. Check the OpenAI account limits before retrying repeatedly.
+
 ## Roadmap
 
 - [x] Project documentation

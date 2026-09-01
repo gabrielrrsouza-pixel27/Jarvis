@@ -24,6 +24,8 @@ def chat(request):
         return JsonResponse({'error': str(exc)}, status=400)
     except PermissionError as exc:
         return JsonResponse({'error': str(exc)}, status=403)
+    except RuntimeError as exc:
+        return JsonResponse({'error': str(exc)}, status=502)
     return JsonResponse(result)
 
 

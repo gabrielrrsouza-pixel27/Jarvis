@@ -35,7 +35,7 @@ This document turns the project vision into testable requirements. A feature is 
 | NFR-002 | Privacy | Secrets remain in environment variables and sensitive values stay out of logs | Implemented for current code |
 | NFR-003 | Modularity | Domain services do not depend on HTTP request objects | Implemented in core services |
 | NFR-004 | Testability | Critical behavior has automated tests | Implemented for current MVP |
-| NFR-005 | Reliability | Tool failures become controlled responses and audit records | Implemented for registered tools |
+| NFR-005 | Reliability | Tool and provider failures become controlled responses and audit records | Implemented for registered tools and LLM fallback |
 | NFR-006 | Performance | Simple text response target under 2 seconds locally | To be measured after LLM integration |
 | NFR-007 | Voice latency | Start spoken response under 4 seconds | To be measured in release 0.4 |
 | NFR-008 | Availability | Stable continuous use for 8 hours | To be tested before 1.0 |

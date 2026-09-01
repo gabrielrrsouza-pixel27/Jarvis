@@ -16,6 +16,35 @@ The project follows a practical versioning model:
 - Add voice input and output adapters
 - Add deployment configuration
 
+## [0.1.11] - 2026-09-01
+
+### Fixed
+
+- Converted OpenAI `HTTP 429` responses into controlled runtime errors.
+- Added orchestrator fallback when the LLM is rate-limited, unavailable, or misconfigured.
+- Isolated offline tests from any API key configured in the developer environment.
+
+### Security
+
+- Provider errors are logged as sanitized structured events without credentials.
+- No retry loop was added, avoiding repeated requests when quota is exhausted.
+
+### Why
+
+The first real terminal request reached OpenAI but ended with an unhandled `HTTP 429`. A provider outage or exhausted quota must not terminate the assistant process or produce a traceback to the user.
+
+### Learning Notes
+
+- Environment-dependent tests can accidentally make paid network calls and become nondeterministic.
+- External provider failures need an explicit resilience policy at the orchestration boundary.
+- A fallback should preserve the session while clearly recording the underlying operational error.
+
+### Verification
+
+- `python manage.py check`
+- `python manage.py test core` — 14 tests passed
+- Rate-limit regression test — controlled fallback verified
+
 ## [0.1.9] - 2026-09-01
 
 ### Added

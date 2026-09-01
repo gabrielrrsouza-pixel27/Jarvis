@@ -50,7 +50,11 @@ class JarvisOrchestrator:
                 },
                 *history,
             ]
-            decision = self.llm.decide(messages, self.registry.definitions())
+            try:
+                decision = self.llm.decide(messages, self.registry.definitions())
+            except RuntimeError as exc:
+                log_event('llm_error', error=str(exc))
+                decision = {'content': None, 'tool_call': None}
             automatic_call = decision.get('tool_call')
             if automatic_call:
                 tool_result = execute_tool(

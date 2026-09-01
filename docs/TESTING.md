@@ -54,6 +54,7 @@ A task is complete only when its tests pass. Tests are part of the definition of
 - High-risk actions cannot run without confirmation
 - Secrets never appear in logs
 - Invalid parameters are rejected
+- Provider rate-limit errors produce a controlled fallback instead of a crash
 
 ## Definition of Done
 

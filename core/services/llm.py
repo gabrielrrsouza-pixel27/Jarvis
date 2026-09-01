@@ -1,11 +1,11 @@
 import json
 import os
-from urllib import request
+from urllib import error, request
 
 
 class LLMService:
     def __init__(self, api_key: str | None = None, urlopen=request.urlopen) -> None:
-        self.api_key = api_key or os.getenv('OPENAI_API_KEY', '')
+        self.api_key = api_key if api_key is not None else os.getenv('OPENAI_API_KEY', '')
         self.model = os.getenv('OPENAI_MODEL', 'gpt-4o-mini')
         self.urlopen = urlopen
 
@@ -29,8 +29,7 @@ class LLMService:
             },
             method='POST',
         )
-        with self.urlopen(http_request, timeout=30) as response:
-            body = json.loads(response.read().decode('utf-8'))
+        body = self._send(http_request)
         try:
             content = body['choices'][0]['message']['content']
         except (KeyError, IndexError, TypeError) as exc:
@@ -74,8 +73,7 @@ class LLMService:
             },
             method='POST',
         )
-        with self.urlopen(http_request, timeout=30) as response:
-            body = json.loads(response.read().decode('utf-8'))
+        body = self._send(http_request)
         try:
             message = body['choices'][0]['message']
         except (KeyError, IndexError, TypeError) as exc:
@@ -96,3 +94,16 @@ class LLMService:
             'content': message.get('content'),
             'tool_call': tool_call,
         }
+
+    def _send(self, http_request: request.Request) -> dict:
+        try:
+            with self.urlopen(http_request, timeout=30) as response:
+                return json.loads(response.read().decode('utf-8'))
+        except error.HTTPError as exc:
+            if exc.code == 429:
+                raise RuntimeError(
+                    'LLM rate limit or quota reached. Check your OpenAI billing and limits.'
+                ) from exc
+            raise RuntimeError(f'LLM request failed with HTTP {exc.code}.') from exc
+        except (error.URLError, TimeoutError, json.JSONDecodeError) as exc:
+            raise RuntimeError('LLM request failed. Check your network and provider configuration.') from exc
