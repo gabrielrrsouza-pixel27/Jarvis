@@ -277,9 +277,9 @@ terminal session. Check the OpenAI account limits before retrying repeatedly.
 ## Roadmap
 
 - [x] Project documentation
-- [ ] v0.1 — Terminal + AI
-- [ ] v0.2 — Conversation memory
-- [ ] v0.3 — Tools system
+- [x] v0.1 — Terminal + AI
+- [x] v0.2 — Conversation memory
+- [X] v0.3 — Tools system
 - [ ] v0.4 — Speech recognition and synthesis
 - [ ] v0.5 — Wake word detection
 - [ ] v0.6 — Computer control
