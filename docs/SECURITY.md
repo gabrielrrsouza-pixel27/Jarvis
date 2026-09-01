@@ -75,6 +75,6 @@ page to receive the CSRF cookie before making a state-changing request.
 - [ ] `.env` is ignored and `.env.example` has placeholders
 - [ ] High-risk tools require explicit confirmation
 - [ ] Logs are sanitized
-- [ ] Tool parameters are validated
+- [x] Tool parameters are validated
 - [ ] Dependencies are checked for known vulnerabilities
 - [ ] Infrastructure details are not unnecessarily exposed

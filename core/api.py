@@ -13,10 +13,11 @@ def chat(request):
         return JsonResponse({'error': 'POST required.'}, status=405)
     try:
         payload = json.loads(request.body or '{}')
+        tool_call = payload.get('tool_call') or {}
         result = JarvisOrchestrator().respond(
             text=payload.get('message', ''),
-            tool_name=payload.get('tool'),
-            tool_parameters=payload.get('parameters'),
+            tool_name=payload.get('tool') or tool_call.get('name'),
+            tool_parameters=payload.get('parameters') or tool_call.get('arguments'),
             confirmed=payload.get('confirmed', False),
         )
     except (ValueError, TypeError, json.JSONDecodeError) as exc:

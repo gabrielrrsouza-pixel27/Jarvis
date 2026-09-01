@@ -14,7 +14,8 @@ This document turns the project vision into testable requirements. A feature is 
 | FR-006 | Store, search, and delete persistent memories | 0.2 | Implemented |
 | FR-007 | Connect the orchestrator to an LLM provider | 0.1 | Implemented |
 | FR-008 | Preserve session context across requests | 0.2 | In progress |
-| FR-009 | Add structured LLM tool calling | 0.3 | Planned |
+| FR-009 | Accept structured tool-call requests with validated parameters | 0.3 | Implemented |
+| FR-009a | Let the LLM select tools automatically through provider tool calling | 0.3 | Planned |
 | FR-010 | Require confirmation for high-risk actions | 0.3 | Partially implemented |
 | FR-011 | Capture and transcribe microphone input | 0.4 | Planned |
 | FR-012 | Synthesize assistant responses to audio | 0.4 | Planned |
@@ -33,7 +34,7 @@ This document turns the project vision into testable requirements. A feature is 
 | NFR-002 | Privacy | Secrets remain in environment variables and sensitive values stay out of logs | Implemented for current code |
 | NFR-003 | Modularity | Domain services do not depend on HTTP request objects | Implemented in core services |
 | NFR-004 | Testability | Critical behavior has automated tests | Implemented for current MVP |
-| NFR-005 | Reliability | Tool failures become controlled responses and audit records | Partially implemented |
+| NFR-005 | Reliability | Tool failures become controlled responses and audit records | Implemented for registered tools |
 | NFR-006 | Performance | Simple text response target under 2 seconds locally | To be measured after LLM integration |
 | NFR-007 | Voice latency | Start spoken response under 4 seconds | To be measured in release 0.4 |
 | NFR-008 | Availability | Stable continuous use for 8 hours | To be tested before 1.0 |

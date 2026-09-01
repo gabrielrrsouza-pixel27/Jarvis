@@ -9,6 +9,7 @@ class Tool:
     risk_level: str
     requires_confirmation: bool
     handler: Callable[..., dict[str, Any]]
+    parameters: dict[str, dict[str, Any]]
 
 
 class ToolRegistry:
@@ -28,3 +29,13 @@ class ToolRegistry:
 
     def names(self) -> list[str]:
         return sorted(self._tools)
+
+    def definitions(self) -> list[dict[str, Any]]:
+        return [
+            {
+                'name': tool.name,
+                'description': tool.description,
+                'parameters': tool.parameters,
+            }
+            for tool in self._tools.values()
+        ]

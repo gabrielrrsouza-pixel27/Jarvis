@@ -16,6 +16,36 @@ The project follows a practical versioning model:
 - Add voice input and output adapters
 - Add deployment configuration
 
+## [0.1.6] - 2026-09-01
+
+### Added
+
+- Structured `tool_call` request support in the chat API
+- Parameter schemas on registered tools
+- Rejection of unknown tool parameters before execution
+- Tool definition export for future LLM provider integration
+- Tests for structured calls and invalid parameter rejection
+
+### Changed
+
+- Tool execution now initializes failed audit results safely when a handler raises an exception.
+- Requirements and architecture docs distinguish validated tool calls from future automatic LLM tool selection.
+
+### Why
+
+The assistant needs a strict boundary between model output and executable actions. Validating the tool name and arguments before execution reduces accidental or malicious parameter injection.
+
+### Learning Notes
+
+- A structured payload is a contract, not proof that an LLM selected the action correctly.
+- Parameter validation belongs before the handler runs and must not rely only on prompt instructions.
+- Failure paths need the same audit guarantees as successful tool calls.
+
+### Verification
+
+- `python manage.py check`
+- `python manage.py test core` — 9 tests passed
+
 ## [0.1.5] - 2026-09-01
 
 ### Fixed

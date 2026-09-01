@@ -83,6 +83,22 @@ class BaseTool:
 
 The core should discover tools through a registry rather than importing each implementation directly. This keeps new tools replaceable and testable.
 
+The chat API accepts a structured call in this shape:
+
+```json
+{
+    "message": "What time is it?",
+    "tool_call": {
+        "name": "get_current_time",
+        "arguments": {}
+    }
+}
+```
+
+The registry rejects unknown tools and parameters before execution. Automatic
+tool selection by the LLM is a separate milestone and is not assumed to be
+implemented by this request format alone.
+
 ## Planned Data Flow
 
 PostgreSQL stores conversations, messages, memories, tasks, devices, tool calls, logs, and preferences. Redis is reserved for fast session state and queues. `pgvector` is planned for semantic memory and RAG.

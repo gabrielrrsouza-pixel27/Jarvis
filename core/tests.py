@@ -30,6 +30,14 @@ class JarvisOrchestratorTests(TestCase):
         self.assertEqual(result['tool_result']['timezone'], 'local')
         self.assertTrue(ToolAuditLog.objects.get().success)
 
+    def test_tool_rejects_unknown_parameters(self):
+        with self.assertRaisesMessage(ValueError, 'Unknown tool parameter(s): unsafe'):
+            JarvisOrchestrator().respond(
+                'What time is it?',
+                tool_name='get_current_time',
+                tool_parameters={'unsafe': True},
+            )
+
     def test_orchestrator_uses_offline_fallback_without_api_key(self):
         result = JarvisOrchestrator(llm=LLMService(api_key='')).respond('Offline test')
 
@@ -54,6 +62,19 @@ class ChatApiTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['answer'], 'JARVIS received: Test message')
+
+    def test_chat_endpoint_accepts_structured_tool_call(self):
+        response = self.client.post(
+            reverse('chat'),
+            data=json.dumps({
+                'message': 'What time is it?',
+                'tool_call': {'name': 'get_current_time', 'arguments': {}},
+            }),
+            content_type='application/json',
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIsNotNone(response.json()['tool_result'])
 
 
 class MemoryTests(TestCase):

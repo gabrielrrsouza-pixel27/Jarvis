@@ -14,6 +14,7 @@ def build_registry() -> ToolRegistry:
         risk_level='low',
         requires_confirmation=False,
         handler=get_current_time,
+        parameters={},
     ))
     registry.register(Tool(
         name='get_system_stats',
@@ -21,6 +22,7 @@ def build_registry() -> ToolRegistry:
         risk_level='low',
         requires_confirmation=False,
         handler=get_system_stats,
+        parameters={},
     ))
     return registry
 
@@ -33,12 +35,18 @@ def execute_tool(
 ) -> dict[str, Any]:
     tool = registry.get(name)
     parameters = parameters or {}
+    if not isinstance(parameters, dict):
+        raise ValueError('Tool parameters must be an object.')
+    unknown_parameters = set(parameters) - set(tool.parameters)
+    if unknown_parameters:
+        names = ', '.join(sorted(unknown_parameters))
+        raise ValueError(f'Unknown tool parameter(s): {names}')
     if tool.requires_confirmation and not confirmed:
         raise PermissionError(f'Confirmation required for tool: {name}')
 
     started = time.perf_counter()
     success = False
-    result: dict[str, Any]
+    result: dict[str, Any] = {'status': 'failed'}
     try:
         result = tool.handler(**parameters)
         success = True
