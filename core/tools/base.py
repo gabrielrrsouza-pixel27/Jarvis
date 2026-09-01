@@ -35,7 +35,12 @@ class ToolRegistry:
             {
                 'name': tool.name,
                 'description': tool.description,
-                'parameters': tool.parameters,
+                'parameters': {
+                    key: value
+                    for key, value in tool.parameters.items()
+                    if key != 'required'
+                },
+                'required': tool.parameters.get('required', []),
             }
             for tool in self._tools.values()
         ]

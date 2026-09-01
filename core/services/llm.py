@@ -57,6 +57,7 @@ class LLMService:
                         'parameters': {
                             'type': 'object',
                             'properties': tool['parameters'],
+                            'required': tool.get('required', []),
                         },
                     },
                 }

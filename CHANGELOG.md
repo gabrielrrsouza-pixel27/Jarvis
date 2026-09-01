@@ -16,6 +16,36 @@ The project follows a practical versioning model:
 - Add voice input and output adapters
 - Add deployment configuration
 
+## [0.1.15] - 2026-09-01
+
+### Added
+
+- `save_memory` as the third functional MVP tool
+- Required-field validation for tool arguments
+- Primitive type and numeric range validation for tool arguments
+- Provider schemas that distinguish properties from required fields
+- Tests for memory tool persistence and invalid parameter types
+
+### Changed
+
+- The first three-tool MVP milestone is now complete: time, system status, and persistent memory.
+- High-risk confirmation is documented as an execution-boundary control, ready for future high-risk tools.
+
+### Why
+
+The project definition of the first MVP requires at least three real tools. Memory was already available as a service, so exposing it through the same registry proves that domain services can be safely composed into executable assistant capabilities.
+
+### Learning Notes
+
+- A service becomes an assistant capability only when it has a validated tool contract and audit trail.
+- JSON schema metadata must not be treated as executable user parameters.
+- Type and range validation should happen before side effects or database writes.
+
+### Verification
+
+- `python manage.py check`
+- `python manage.py test core` — 18 tests passed
+
 ## [0.1.13] - 2026-09-01
 
 ### Added

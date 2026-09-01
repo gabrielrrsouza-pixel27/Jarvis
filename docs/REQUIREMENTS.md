@@ -11,13 +11,14 @@ This document turns the project vision into testable requirements. A feature is 
 | FR-002 | Persist user and assistant messages in a conversation | 0.1 | Implemented |
 | FR-003 | Register tools through a common contract | 0.1 | Implemented |
 | FR-004 | Execute approved low-risk tools | 0.1 | Implemented |
+| FR-004a | Persist a memory through a registered tool | 0.3 | Implemented |
 | FR-005 | Audit every tool execution | 0.1 | Implemented |
 | FR-006 | Store, search, and delete persistent memories | 0.2 | Implemented |
 | FR-007 | Connect the orchestrator to an LLM provider | 0.1 | Implemented |
 | FR-008 | Preserve session context across requests | 0.2 | Implemented |
 | FR-009 | Accept structured tool-call requests with validated parameters | 0.3 | Implemented |
 | FR-009a | Let the LLM select tools automatically through provider tool calling | 0.3 | Implemented |
-| FR-010 | Require confirmation for high-risk actions | 0.3 | Partially implemented |
+| FR-010 | Require confirmation for high-risk actions | 0.3 | Implemented in execution boundary |
 | FR-011 | Capture and transcribe microphone input | 0.4 | Planned |
 | FR-012 | Synthesize assistant responses to audio | 0.4 | Planned |
 | FR-013 | Detect a local wake word | 0.5 | Planned |
@@ -31,7 +32,7 @@ This document turns the project vision into testable requirements. A feature is 
 
 | ID | Requirement | Acceptance target | Status |
 |---|---|---|---|
-| NFR-001 | Security | High-risk actions require explicit confirmation | Design implemented; high-risk tools pending |
+| NFR-001 | Security | High-risk actions require explicit confirmation | Implemented in execution boundary |
 | NFR-002 | Privacy | Secrets remain in environment variables and sensitive values stay out of logs | Implemented for current code |
 | NFR-003 | Modularity | Domain services do not depend on HTTP request objects | Implemented in core services |
 | NFR-004 | Testability | Critical behavior has automated tests | Implemented for current MVP |

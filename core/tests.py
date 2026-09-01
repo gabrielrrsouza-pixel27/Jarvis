@@ -36,6 +36,28 @@ class JarvisOrchestratorTests(TestCase):
         self.assertEqual(result['tool_result']['timezone'], 'local')
         self.assertTrue(ToolAuditLog.objects.get().success)
 
+    def test_save_memory_tool_persists_memory(self):
+        result = JarvisOrchestrator(llm=LLMService(api_key='')).respond(
+            'Remember this preference',
+            tool_name='save_memory',
+            tool_parameters={
+                'content': 'User prefers concise answers',
+                'category': 'preference',
+                'importance': 8,
+            },
+        )
+
+        self.assertEqual(result['tool_result']['category'], 'preference')
+        self.assertEqual(Memory.objects.count(), 1)
+
+    def test_tool_rejects_invalid_parameter_types(self):
+        with self.assertRaisesMessage(ValueError, 'Tool parameter must be an integer: importance'):
+            JarvisOrchestrator().respond(
+                'Remember this',
+                tool_name='save_memory',
+                tool_parameters={'content': 'fact', 'importance': 'high'},
+            )
+
     def test_tool_execution_emits_structured_sanitized_log(self):
         with self.assertLogs('jarvis.audit', level='INFO') as captured:
             JarvisOrchestrator(llm=LLMService(api_key='')).respond(
