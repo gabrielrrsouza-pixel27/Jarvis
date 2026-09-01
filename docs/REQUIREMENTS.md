@@ -7,6 +7,7 @@ This document turns the project vision into testable requirements. A feature is 
 | ID | Requirement | Release | Status |
 |---|---|---:|---|
 | FR-001 | Accept a text message and return an assistant response | 0.1 | Implemented |
+| FR-001a | Provide an interactive terminal conversation loop | 0.1 | Implemented |
 | FR-002 | Persist user and assistant messages in a conversation | 0.1 | Implemented |
 | FR-003 | Register tools through a common contract | 0.1 | Implemented |
 | FR-004 | Execute approved low-risk tools | 0.1 | Implemented |

@@ -13,7 +13,7 @@ The roadmap is incremental. Each version adds a capability on top of a verified 
 - [x] Add conversation persistence and audit logging
 - [x] Add safe tool registry and chat endpoint
 - [x] Integrate an OpenAI-compatible LLM provider
-- [ ] Add a terminal conversation loop
+- [x] Add a terminal conversation loop
 - [ ] Add structured logging
 
 ## 0.2 — Conversation memory

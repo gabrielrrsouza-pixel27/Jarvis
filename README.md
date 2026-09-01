@@ -190,6 +190,15 @@ alembic upgrade head
 python manage.py runserver
 ```
 
+To start a terminal conversation with the offline fallback or configured LLM:
+
+```powershell
+python manage.py jarvis_chat
+```
+
+Type `:quit` or `:exit` to close the session. The command reuses the same
+orchestrator and conversation persistence used by the HTTP API.
+
 To call the protected chat endpoint from PowerShell, create a session first so
 Django can issue the CSRF cookie:
 

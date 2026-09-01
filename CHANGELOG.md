@@ -16,6 +16,31 @@ The project follows a practical versioning model:
 - Add voice input and output adapters
 - Add deployment configuration
 
+## [0.1.8] - 2026-09-01
+
+### Added
+
+- Interactive `python manage.py jarvis_chat` command
+- Shared conversation state across terminal messages
+- `:quit` and `:exit` session commands
+- Graceful handling of Ctrl+C and end-of-input
+- Integration test for the offline terminal workflow
+
+### Why
+
+The terminal is the simplest interface for validating the assistant before voice and web interfaces add more moving parts. Reusing the existing orchestrator keeps behavior consistent across interfaces.
+
+### Learning Notes
+
+- User interfaces should call domain services instead of duplicating assistant logic.
+- A session needs explicit exit and interruption behavior for reliable local use.
+- Offline execution makes the terminal loop useful before API credentials are configured.
+
+### Verification
+
+- `python manage.py check`
+- `python manage.py test core` — 11 tests passed
+
 ## [0.1.7] - 2026-09-01
 
 ### Added

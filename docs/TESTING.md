@@ -75,3 +75,6 @@ The current Django foundation is verified with:
 ```
 
 The first command validates Django configuration. The second validates the core application, chat endpoint, tool execution, and memory lifecycle against a test database.
+
+The terminal command is covered by an integration test that runs an offline
+conversation and exits through the `:quit` command.

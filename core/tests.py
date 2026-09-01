@@ -1,5 +1,8 @@
 import json
+from io import StringIO
+from unittest.mock import patch
 
+from django.core.management import call_command
 from django.test import TestCase
 from django.urls import reverse
 
@@ -113,3 +116,13 @@ class MemoryTests(TestCase):
         delete_response = self.client.delete(reverse('forget-memory', args=[memory_id]))
         self.assertEqual(delete_response.status_code, 200)
         self.assertFalse(Memory.objects.filter(id=memory_id).exists())
+
+
+class TerminalCommandTests(TestCase):
+    def test_terminal_command_runs_offline_session_until_exit(self):
+        output = StringIO()
+        with patch('builtins.input', side_effect=['Hello from terminal', ':quit']):
+            call_command('jarvis_chat', stdout=output)
+
+        self.assertIn('JARVIS: JARVIS received: Hello from terminal', output.getvalue())
+        self.assertEqual(Message.objects.count(), 2)
