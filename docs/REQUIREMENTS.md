@@ -21,7 +21,7 @@ This document turns the project vision into testable requirements. A feature is 
 | FR-009 | Accept structured tool-call requests with validated parameters | 0.3 | Implemented |
 | FR-009a | Let the LLM select tools automatically through provider tool calling | 0.3 | Implemented |
 | FR-010 | Require confirmation for high-risk actions | 0.3 | Implemented in execution boundary |
-| FR-011 | Capture and transcribe microphone input | 0.4 | Planned |
+| FR-011 | Capture and transcribe microphone input | 0.4 | Implemented capture adapter |
 | FR-012 | Synthesize assistant responses to audio | 0.4 | Planned |
 | FR-012a | Process audio through replaceable STT, Core, and TTS adapters | 0.4 | Implemented offline |
 | FR-012b | Detect speech activity locally from PCM audio frames | 0.4 | Implemented |

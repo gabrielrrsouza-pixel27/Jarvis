@@ -14,6 +14,7 @@ from core.services.llm import LLMService
 from core.services.audit import sanitize
 from core.services.voice import (
     EnergyVAD,
+    MemoryAudioCapture,
     Utf8SpeechToText,
     Utf8TextToSpeech,
     VoicePipeline,
@@ -280,3 +281,34 @@ class VoicePipelineTests(TestCase):
 
         with self.assertRaisesMessage(ValueError, 'Audio input cannot be empty.'):
             pipeline.process(b'')
+
+    def test_memory_audio_capture_streams_circular_buffer(self):
+        capture = MemoryAudioCapture(b'\x01\x02\x03\x04')
+
+        frame1 = capture.capture_frame(samples=2)
+        frame2 = capture.capture_frame(samples=1)
+
+        self.assertEqual(frame1, b'\x01\x02\x03\x04')
+        self.assertEqual(frame2, b'\x01\x02')
+
+    def test_memory_audio_capture_wraps_around(self):
+        capture = MemoryAudioCapture(b'AB')
+
+        first = capture.capture_frame(samples=1)
+        second = capture.capture_frame(samples=1)
+
+        self.assertEqual(first, b'AB')
+        self.assertEqual(second, b'AB')
+
+    def test_memory_audio_capture_stop_resets_position(self):
+        capture = MemoryAudioCapture(b'\x00\x00')
+
+        capture.capture_frame(samples=1)
+        capture.stop()
+        frame = capture.capture_frame(samples=1)
+
+        self.assertEqual(frame, b'\x00\x00')
+
+    def test_memory_audio_capture_rejects_negative_sample_count(self):
+        with self.assertRaisesMessage(ValueError, 'Sample count cannot be negative.'):
+            MemoryAudioCapture().capture_frame(samples=-1)

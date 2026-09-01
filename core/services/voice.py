@@ -20,6 +20,14 @@ class VoiceActivityDetector(Protocol):
         ...
 
 
+class MicrophoneCapture(Protocol):
+    def capture_frame(self, samples: int) -> bytes:
+        ...
+
+    def stop(self) -> None:
+        ...
+
+
 class EnergyVAD:
     """Small local VAD for signed 16-bit PCM mono frames."""
 
@@ -82,3 +90,25 @@ class Utf8TextToSpeech:
 
     def synthesize(self, text: str) -> bytes:
         return text.encode('utf-8')
+
+
+class MemoryAudioCapture:
+    """Offline adapter for testing microphone capture without hardware."""
+
+    def __init__(self, audio_buffer: bytes | None = None) -> None:
+        self.audio_buffer = audio_buffer or b'\x00\x00' * 160
+        self.position = 0
+
+    def capture_frame(self, samples: int) -> bytes:
+        if samples < 0:
+            raise ValueError('Sample count cannot be negative.')
+        frame_size = samples * 2
+        end = self.position + frame_size
+        frame = self.audio_buffer[self.position : end]
+        if len(frame) < frame_size:
+            frame += b'\x00\x00' * (samples - len(frame) // 2)
+        self.position = end % len(self.audio_buffer)
+        return frame
+
+    def stop(self) -> None:
+        self.position = 0

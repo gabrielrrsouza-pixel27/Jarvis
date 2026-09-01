@@ -16,6 +16,31 @@ The project follows a practical versioning model:
 - Add voice input and output adapters
 - Add deployment configuration
 
+## [0.1.24] - 2026-09-01
+
+### Added
+
+- `MicrophoneCapture` protocol for replaceable audio capture
+- `MemoryAudioCapture` offline adapter for testing without hardware
+- Circular buffer streaming for continuous frame capture
+- Sample count validation and stop-and-reset functionality
+- Tests for streaming, wrap-around, and error cases
+
+### Why
+
+Microphone integration is the next step, but hardware input varies by platform. Defining the capture contract first lets developers test the voice pipeline before deploying with real hardware like pyaudio or sounddevice.
+
+### Learning Notes
+
+- Circular buffers need clear semantics for wrapping and reset.
+- Frame size must match the audio format contract (bytes per sample).
+- Offline adapters keep the voice pipeline portable across platforms.
+
+### Verification
+
+- `python manage.py check`
+- `python manage.py test core` — 28 tests passed
+
 ## [0.1.23] - 2026-09-01
 
 ### Added
