@@ -76,5 +76,6 @@ page to receive the CSRF cookie before making a state-changing request.
 - [ ] High-risk tools require explicit confirmation
 - [ ] Logs are sanitized
 - [x] Tool parameters are validated
+- [x] Structured audit events redact sensitive fields
 - [ ] Dependencies are checked for known vulnerabilities
 - [ ] Infrastructure details are not unnecessarily exposed

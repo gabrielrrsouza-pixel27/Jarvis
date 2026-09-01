@@ -40,7 +40,7 @@ This document turns the project vision into testable requirements. A feature is 
 | NFR-007 | Voice latency | Start spoken response under 4 seconds | To be measured in release 0.4 |
 | NFR-008 | Availability | Stable continuous use for 8 hours | To be tested before 1.0 |
 | NFR-009 | Compatibility | Support Windows and Linux for portable modules | Windows foundation verified; Linux pending |
-| NFR-010 | Observability | Structured logs and tool metrics support diagnosis | Audit database implemented; structured logger pending |
+| NFR-010 | Observability | Structured logs and tool metrics support diagnosis | Implemented for interactions and tools |
 | NFR-011 | Maintainability | New tools follow one documented interface | Implemented through `Tool` and `ToolRegistry` |
 | NFR-012 | Data integrity | Schema changes use versioned Django migrations | Implemented |
 

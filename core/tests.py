@@ -9,6 +9,7 @@ from django.urls import reverse
 from core.models import Memory, Message, ToolAuditLog
 from core.services.orchestrator import JarvisOrchestrator
 from core.services.llm import LLMService
+from core.services.audit import sanitize
 
 
 class HomePageTests(TestCase):
@@ -32,6 +33,23 @@ class JarvisOrchestratorTests(TestCase):
 
         self.assertEqual(result['tool_result']['timezone'], 'local')
         self.assertTrue(ToolAuditLog.objects.get().success)
+
+    def test_tool_execution_emits_structured_sanitized_log(self):
+        with self.assertLogs('jarvis.audit', level='INFO') as captured:
+            JarvisOrchestrator().respond(
+                'What time is it?',
+                tool_name='get_current_time',
+            )
+
+        self.assertIn('"event": "tool_executed"', captured.output[0])
+
+
+class AuditLoggingTests(TestCase):
+    def test_sensitive_fields_are_redacted(self):
+        sanitized = sanitize({'token': 'secret-value', 'nested': {'password': 'hidden'}})
+
+        self.assertEqual(sanitized['token'], '[REDACTED]')
+        self.assertEqual(sanitized['nested']['password'], '[REDACTED]')
 
     def test_tool_rejects_unknown_parameters(self):
         with self.assertRaisesMessage(ValueError, 'Unknown tool parameter(s): unsafe'):

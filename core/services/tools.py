@@ -2,6 +2,7 @@ import time
 from typing import Any
 
 from core.models import ToolAuditLog
+from core.services.audit import log_event
 from core.tools.base import Tool, ToolRegistry
 from core.tools.safe import get_current_time, get_system_stats
 
@@ -52,6 +53,7 @@ def execute_tool(
         success = True
         return result
     finally:
+        duration_ms = int((time.perf_counter() - started) * 1000)
         ToolAuditLog.objects.create(
             tool_name=tool.name,
             parameters=parameters,
@@ -59,5 +61,14 @@ def execute_tool(
             risk_level=tool.risk_level,
             confirmed_by_user=confirmed,
             success=success,
-            duration_ms=int((time.perf_counter() - started) * 1000),
+            duration_ms=duration_ms,
+        )
+        log_event(
+            'tool_executed',
+            tool=tool.name,
+            parameters=parameters,
+            risk_level=tool.risk_level,
+            confirmed_by_user=confirmed,
+            success=success,
+            duration_ms=duration_ms,
         )

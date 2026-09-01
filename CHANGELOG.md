@@ -16,6 +16,36 @@ The project follows a practical versioning model:
 - Add voice input and output adapters
 - Add deployment configuration
 
+## [0.1.9] - 2026-09-01
+
+### Added
+
+- Structured JSON audit events for tool execution and completed interactions
+- Sensitive-field redaction for tokens, passwords, secrets, API keys, and authorization values
+- Django console logging configuration for the `jarvis.audit` logger
+- Tests for structured events and credential redaction
+
+### Security
+
+- Audit logs record operational metadata without exposing sensitive values.
+- The database audit record and structured console event remain separate controls.
+
+### Why
+
+The roadmap requires diagnosable behavior, while the security model prohibits secrets in logs. A small structured logging boundary satisfies both requirements and gives future monitoring systems a stable event format.
+
+### Learning Notes
+
+- Logging is part of the security boundary, not only a debugging convenience.
+- Redaction must handle nested dictionaries and be applied before serialization.
+- Database audit records and operational logs serve different purposes and should not replace one another.
+
+### Verification
+
+- `python manage.py check`
+- `python manage.py test core` — 13 tests passed
+- `git diff --check`
+
 ## [0.1.8] - 2026-09-01
 
 ### Added

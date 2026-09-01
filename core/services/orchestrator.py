@@ -1,6 +1,7 @@
 from typing import Any
 
 from core.models import Conversation, Message
+from core.services.audit import log_event
 from core.services.llm import LLMService
 from core.services.tools import build_registry, execute_tool
 
@@ -66,6 +67,12 @@ class JarvisOrchestrator:
             conversation=conversation,
             role=Message.Role.ASSISTANT,
             content=answer,
+        )
+        log_event(
+            'interaction_completed',
+            conversation_id=conversation.id,
+            tool=tool_name,
+            success=True,
         )
         return {
             'conversation_id': conversation.id,
