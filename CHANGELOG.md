@@ -16,6 +16,16 @@ The project follows a practical versioning model:
 - Add voice input and output adapters
 - Add deployment configuration
 
+## [0.1.19] - 2026-09-01
+
+### Fixed
+
+- Published the production environment instructions that were omitted from the previous release commit.
+
+### Verification
+
+- Confirmed the README documents `DJANGO_DEBUG=false`, a long secret, restricted hosts, HTTPS CSRF origins, and HTTPS serving.
+
 ## [0.1.18] - 2026-09-01
 
 ### Added

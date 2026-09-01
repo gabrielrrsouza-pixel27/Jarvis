@@ -172,6 +172,10 @@ OPENAI_API_KEY=your_api_key_here
 DB_URL=postgresql://jarvis:jarvis@localhost/jarvis
 ```
 
+For production, set `DJANGO_DEBUG=false`, use a unique secret, restrict
+`DJANGO_ALLOWED_HOSTS`, configure `DJANGO_CSRF_TRUSTED_ORIGINS` with HTTPS
+origins, and serve the application behind HTTPS.
+
 ### 5. Start the database
 
 ```bash
