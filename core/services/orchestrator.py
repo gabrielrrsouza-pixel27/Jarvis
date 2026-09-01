@@ -1,12 +1,14 @@
 from typing import Any
 
 from core.models import Conversation, Message
+from core.services.llm import LLMService
 from core.services.tools import build_registry, execute_tool
 
 
 class JarvisOrchestrator:
-    def __init__(self) -> None:
+    def __init__(self, llm: LLMService | None = None) -> None:
         self.registry = build_registry()
+        self.llm = llm or LLMService()
 
     def respond(
         self,
@@ -36,7 +38,17 @@ class JarvisOrchestrator:
             )
             answer = f'Tool {tool_name} completed successfully.'
         else:
-            answer = f'JARVIS received: {text}'
+            history = [
+                {'role': message.role, 'content': message.content}
+                for message in conversation.messages.order_by('created_at')
+            ]
+            answer = self.llm.respond([
+                {
+                    'role': 'system',
+                    'content': 'You are JARVIS, a concise and safe personal assistant.',
+                },
+                *history,
+            ]) or f'JARVIS received: {text}'
 
         Message.objects.create(
             conversation=conversation,

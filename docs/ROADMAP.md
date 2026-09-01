@@ -12,7 +12,7 @@ The roadmap is incremental. Each version adds a capability on top of a verified 
 - [x] Add `.env.example`
 - [x] Add conversation persistence and audit logging
 - [x] Add safe tool registry and chat endpoint
-- [ ] Integrate an LLM provider
+- [x] Integrate an OpenAI-compatible LLM provider
 - [ ] Add a terminal conversation loop
 - [ ] Add structured logging
 

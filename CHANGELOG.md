@@ -16,6 +16,37 @@ The project follows a practical versioning model:
 - Add voice input and output adapters
 - Add deployment configuration
 
+## [0.1.4] - 2026-09-01
+
+### Added
+
+- Provider-agnostic `LLMService` with OpenAI Chat Completions support
+- Offline fallback when `OPENAI_API_KEY` is not configured
+- Conversation history passed to the configured LLM
+- Automatic loading of local `.env` configuration
+- `OPENAI_MODEL` configuration option
+- Tests proving the offline path does not require network access
+
+### Changed
+
+- The orchestrator now uses the LLM adapter for normal text responses.
+- The README and requirements specification distinguish the LLM adapter from future tool calling.
+
+### Why
+
+The roadmap requires an LLM connection, but development and tests must remain deterministic and usable without paid cloud access. The adapter boundary allows the provider to be replaced later without changing the core orchestrator.
+
+### Learning Notes
+
+- External services need a local fallback before they become part of the default execution path.
+- API credentials must be loaded from the environment and never embedded in source code.
+- LLM tool calling is a separate milestone from basic LLM text generation and should not be marked complete prematurely.
+
+### Verification
+
+- `python manage.py check`
+- `python manage.py test core` — 7 tests passed
+
 ## [0.1.3] - 2026-09-01
 
 ### Added

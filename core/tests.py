@@ -5,6 +5,7 @@ from django.urls import reverse
 
 from core.models import Memory, Message, ToolAuditLog
 from core.services.orchestrator import JarvisOrchestrator
+from core.services.llm import LLMService
 
 
 class HomePageTests(TestCase):
@@ -28,6 +29,19 @@ class JarvisOrchestratorTests(TestCase):
 
         self.assertEqual(result['tool_result']['timezone'], 'local')
         self.assertTrue(ToolAuditLog.objects.get().success)
+
+    def test_orchestrator_uses_offline_fallback_without_api_key(self):
+        result = JarvisOrchestrator(llm=LLMService(api_key='')).respond('Offline test')
+
+        self.assertEqual(result['answer'], 'JARVIS received: Offline test')
+
+
+class LLMServiceTests(TestCase):
+    def test_unconfigured_service_does_not_make_network_request(self):
+        service = LLMService(api_key='')
+
+        self.assertFalse(service.configured)
+        self.assertIsNone(service.respond([{'role': 'user', 'content': 'Hello'}]))
 
 
 class ChatApiTests(TestCase):
