@@ -21,7 +21,7 @@ The roadmap is incremental. Each version adds a capability on top of a verified 
 - [x] Store session message history
 - [x] Persist conversations and messages
 - [x] Store, search, and delete persistent memories
-- [ ] Add PostgreSQL configuration
+- [x] Add PostgreSQL configuration through `DB_URL`
 - [ ] Add SQLAlchemy and Alembic where required
 - [ ] Create the first database migration
 

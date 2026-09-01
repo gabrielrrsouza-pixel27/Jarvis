@@ -181,8 +181,12 @@ docker-compose up -d postgres
 ### 6. Run database migrations
 
 ```bash
-alembic upgrade head
+python manage.py migrate
 ```
+
+Set `DB_URL=postgresql://user:password@host:5432/database` in `.env` when a
+PostgreSQL server is available. Without that variable, the project uses the
+local SQLite database.
 
 ### 7. Start the application
 

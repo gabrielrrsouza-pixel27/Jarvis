@@ -43,6 +43,7 @@ This document turns the project vision into testable requirements. A feature is 
 | NFR-010 | Observability | Structured logs and tool metrics support diagnosis | Implemented for interactions and tools |
 | NFR-011 | Maintainability | New tools follow one documented interface | Implemented through `Tool` and `ToolRegistry` |
 | NFR-012 | Data integrity | Schema changes use versioned Django migrations | Implemented |
+| NFR-013 | Database portability | Select SQLite or PostgreSQL through `DB_URL` | Implemented |
 
 ## Requirement Workflow
 

@@ -16,6 +16,30 @@ The project follows a practical versioning model:
 - Add voice input and output adapters
 - Add deployment configuration
 
+## [0.1.13] - 2026-09-01
+
+### Added
+
+- Environment-driven database selection through `DB_URL`
+- PostgreSQL backend support using the existing Django models and migrations
+- `psycopg` dependency for PostgreSQL connections
+- Documentation for SQLite development and PostgreSQL deployment
+
+### Why
+
+The project needs a portable local workflow without blocking the production architecture. SQLite remains the default for development, while PostgreSQL can be enabled through configuration rather than code changes.
+
+### Learning Notes
+
+- Database portability is an infrastructure boundary and should not leak into domain services.
+- A PostgreSQL driver can be installed before a database server is available; connection validation remains a separate deployment check.
+- Migration commands should match the framework that currently owns the models.
+
+### Verification
+
+- `python manage.py check`
+- `python manage.py test core` — 16 tests passed with SQLite
+
 ## [0.1.12] - 2026-09-01
 
 ### Added

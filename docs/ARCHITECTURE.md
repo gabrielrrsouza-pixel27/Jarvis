@@ -102,7 +102,10 @@ orchestrator sends it through the local registry and confirmation policy.
 
 ## Planned Data Flow
 
-PostgreSQL stores conversations, messages, memories, tasks, devices, tool calls, logs, and preferences. Redis is reserved for fast session state and queues. `pgvector` is planned for semantic memory and RAG.
+The database backend is selected through `DB_URL`. SQLite is the default for
+local development and tests; PostgreSQL is supported for deployment with the
+same Django models and migrations. Redis is reserved for fast session state and
+queues. `pgvector` is planned for semantic memory and RAG.
 
 ## Architecture Decisions
 
