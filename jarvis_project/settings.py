@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
 import os
+import sys
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -33,8 +34,9 @@ SECRET_KEY = os.getenv(
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DJANGO_DEBUG', 'true').lower() == 'true'
+TESTING = 'test' in sys.argv
 
-if not DEBUG:
+if not DEBUG and not TESTING:
     if SECRET_KEY == 'django-insecure-development-only-change-me':
         raise ImproperlyConfigured(
             'DJANGO_SECRET_KEY must be set when DJANGO_DEBUG=false.'
@@ -197,7 +199,7 @@ SECURE_REFERRER_POLICY = 'same-origin'
 SESSION_COOKIE_HTTPONLY = True
 CSRF_COOKIE_HTTPONLY = False
 
-if not DEBUG:
+if not DEBUG and not TESTING:
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True

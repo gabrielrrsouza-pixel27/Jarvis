@@ -16,6 +16,21 @@ The project follows a practical versioning model:
 - Add voice input and output adapters
 - Add deployment configuration
 
+## [0.1.21] - 2026-09-01
+
+### Fixed
+
+- Keep production HTTPS enforcement active while preventing `manage.py test` from redirecting the local test client.
+
+### Why
+
+The voice pipeline validation exposed that a production-style local `.env` caused the test suite to receive HTTPS redirects. Test isolation now changes only the test runner path; production behavior remains hardened.
+
+### Verification
+
+- `python manage.py check`
+- `python manage.py test core` — 21 tests passed
+
 ## [0.1.20] - 2026-09-01
 
 ### Added
